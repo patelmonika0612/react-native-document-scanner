@@ -88,9 +88,11 @@ public class ImageProcessor extends Handler {
 
             if (command.equals("previewFrame")) {
                 processPreviewFrame((PreviewFrame) obj.getObj());
-            } else if(command.equals("previewFrame1")) {
+            } 
+            else if(command.equals("previewFrame1")) {
                 processPreviewFrame1((PreviewFrame) obj.getObj());
-            }else if (command.equals("pictureTaken")) {
+            }
+            else if (command.equals("pictureTaken")) {
                 processPicture((Mat) obj.getObj());
             }
         }
@@ -122,7 +124,8 @@ public class ImageProcessor extends Handler {
 
      private void processPreviewFrame1(PreviewFrame previewFrame) {
 
-        Mat frame = previewFrame.getFrame();
+        // TODO: Remove the comment for detect the frame and stop auto capture
+        /* Mat frame = previewFrame.getFrame();
 
         boolean focused = mMainActivity.isFocused();
 
@@ -137,7 +140,8 @@ public class ImageProcessor extends Handler {
             numOfSquares = 0;
         }
 
-        frame.release();
+        frame.release(); */
+        
         mMainActivity.setImageProcessorBusy(false);
 
     }
