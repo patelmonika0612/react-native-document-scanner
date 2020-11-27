@@ -445,7 +445,6 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
-
         Camera.Size pictureSize = camera.getParameters().getPreviewSize();
 
         if (mFocused && !imageProcessorBusy) {
@@ -555,7 +554,8 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
                             if (success) {
                                 takePicture();
                             } else {
-                                onPictureFailed();
+                                takePicture();
+//                                onPictureFailed();
                             }
                         }
                     });
