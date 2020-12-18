@@ -51,6 +51,6 @@ typedef NS_ENUM(NSInteger, IPDFRectangeType)
 @property (nonatomic, assign) float contrast;
 @property (nonatomic, assign) float brightness;
 @property (nonatomic, assign) NSInteger detectionRefreshRateInMS;
-
+@property (nonatomic, assign) BOOL manualOnly;
 
 @end

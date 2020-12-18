@@ -59,6 +59,10 @@ public class ImageProcessor extends Handler {
         mBugRotate = sharedPref.getBoolean("bug_rotate", false);
     }
 
+    public void setManualOnly(boolean manualOnly) {
+        this.manualCapture = manualOnly;
+    }
+
     public void setNumOfRectangles(int numOfRectangles) {
         this.numOfRectangles = numOfRectangles;
     }
@@ -184,23 +188,28 @@ public class ImageProcessor extends Handler {
         sd.widthWithRatio = Double.valueOf(sd.originalSize.height / ratio).intValue();
 
         Mat doc;
-        if (quad != null) {
-
-            sd.originalPoints = new Point[4];
-
-            sd.originalPoints[0] = new Point(sd.widthWithRatio - quad.points[3].y, quad.points[3].x); // TopLeft
-            sd.originalPoints[1] = new Point(sd.widthWithRatio - quad.points[0].y, quad.points[0].x); // TopRight
-            sd.originalPoints[2] = new Point(sd.widthWithRatio - quad.points[1].y, quad.points[1].x); // BottomRight
-            sd.originalPoints[3] = new Point(sd.widthWithRatio - quad.points[2].y, quad.points[2].x); // BottomLeft
-
-            sd.quadrilateral = quad;
-            sd.previewPoints = mPreviewPoints;
-            sd.previewSize = mPreviewSize;
-
-            doc = fourPointTransform(inputRgba, quad.points);
-        } else {
+        if(this.manualCapture) {
             doc = new Mat(inputRgba.size(), CvType.CV_8UC4);
             inputRgba.copyTo(doc);
+        } else {
+            if (quad != null) {
+
+                sd.originalPoints = new Point[4];
+
+                sd.originalPoints[0] = new Point(sd.widthWithRatio - quad.points[3].y, quad.points[3].x); // TopLeft
+                sd.originalPoints[1] = new Point(sd.widthWithRatio - quad.points[0].y, quad.points[0].x); // TopRight
+                sd.originalPoints[2] = new Point(sd.widthWithRatio - quad.points[1].y, quad.points[1].x); // BottomRight
+                sd.originalPoints[3] = new Point(sd.widthWithRatio - quad.points[2].y, quad.points[2].x); // BottomLeft
+
+                sd.quadrilateral = quad;
+                sd.previewPoints = mPreviewPoints;
+                sd.previewSize = mPreviewSize;
+
+                doc = fourPointTransform(inputRgba, quad.points);
+            } else {
+                doc = new Mat(inputRgba.size(), CvType.CV_8UC4);
+                inputRgba.copyTo(doc);
+            }
         }
         enhanceDocument(doc);
         return sd.setProcessed(doc);

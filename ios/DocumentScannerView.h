@@ -13,7 +13,7 @@
 @property (nonatomic, assign) BOOL useBase64;
 @property (nonatomic, assign) BOOL captureMultiple;
 @property (nonatomic, assign) BOOL saveInAppDocument;
-@property (nonatomic, assign) BOOL manualOnly;
+//@property (nonatomic, assign) BOOL manualOnly; // for stop auto capture in manual mode
 
 - (void) capture;
 

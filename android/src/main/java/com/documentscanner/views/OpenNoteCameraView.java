@@ -157,6 +157,9 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
     public void setManualOnly(boolean manualOnly) {
         this.manualCapture = manualOnly;
+        if (mImageProcessor != null) {
+            mImageProcessor.setManualOnly(manualOnly);
+        }
     }
 
     public void setBrightness(double brightness) {

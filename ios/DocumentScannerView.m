@@ -31,9 +31,10 @@
         [NSDate timeIntervalSinceReferenceDate] > self.lastCaptureTime + self.durationBetweenCaptures) {
         self.lastCaptureTime = [NSDate timeIntervalSinceReferenceDate];
         self.stableCounter = 0;
-        if(!self.manualOnly) {
-            [self capture];
-        }
+        [self capture];
+//        if(!self.manualOnly) { // for stop auto capture in manual mode
+//            [self capture];
+//        }
     }
 }
 

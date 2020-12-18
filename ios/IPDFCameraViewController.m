@@ -189,22 +189,27 @@
 
     if (self.isBorderDetectionEnabled)
     {
-        if (_borderDetectFrame)
-        {
-            _borderDetectLastRectangleFeature = [self biggestRectangleInRectangles:[[self highAccuracyRectangleDetector] featuresInImage:image]];
-            _borderDetectFrame = NO;
-        }
-
-        if (_borderDetectLastRectangleFeature)
-        {
-            self.imageDetectionConfidence += .5;
-
-            image = [self drawHighlightOverlayForPoints:image topLeft:_borderDetectLastRectangleFeature.topLeft topRight:_borderDetectLastRectangleFeature.topRight bottomLeft:_borderDetectLastRectangleFeature.bottomLeft bottomRight:_borderDetectLastRectangleFeature.bottomRight];
-        }
-        else
-        {
+        if(self.manualOnly) {
             self.imageDetectionConfidence = 0.0f;
+        } else {
+            if (_borderDetectFrame)
+            {
+                _borderDetectLastRectangleFeature = [self biggestRectangleInRectangles:[[self highAccuracyRectangleDetector] featuresInImage:image]];
+                _borderDetectFrame = NO;
+            }
+            
+            if (_borderDetectLastRectangleFeature)
+            {
+                self.imageDetectionConfidence += .5;
+                
+                image = [self drawHighlightOverlayForPoints:image topLeft:_borderDetectLastRectangleFeature.topLeft topRight:_borderDetectLastRectangleFeature.topRight bottomLeft:_borderDetectLastRectangleFeature.bottomLeft bottomRight:_borderDetectLastRectangleFeature.bottomRight];
+            }
+            else
+            {
+                self.imageDetectionConfidence = 0.0f;
+            }
         }
+       
     }
 
     if (self.context && _coreImageContext)
