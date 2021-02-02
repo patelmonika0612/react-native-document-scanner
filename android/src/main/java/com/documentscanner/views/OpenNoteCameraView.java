@@ -82,6 +82,8 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
     private static OpenNoteCameraView mThis;
 
+    private const float WIDE_SCREEN_RATIO = 1.4;
+
     private OnScannerListener listener = null;
     private OnProcessingListener processingListener = null;
 
@@ -271,6 +273,21 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
 
         mCamera.lock();
 
+        for (Camera.Size r : getResolutionList()) {
+            if (r.width > maxWidth &&  (float)r.width / r.height < WIDE_SCREEN_RATIO) {
+                Log.d(TAG, "supported preview resolution: " + r.width + "x" + r.height);
+                maxWidth = r.width;
+                curRes = r;
+            }
+        }
+
+        if (curRes != null) {
+            return curRes;
+        }
+
+        Log.d(TAG, "4:3 preview resolution not found, falling back");
+
+        // Fallback to largest preview.
         for (Camera.Size r : getResolutionList()) {
             if (r.width > maxWidth) {
                 Log.d(TAG, "supported preview resolution: " + r.width + "x" + r.height);
